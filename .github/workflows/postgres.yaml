@@ -1,0 +1,55 @@
+name: Publish Postgres Docker image
+
+on:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  push_to_registry:
+    name: Push Postgres Docker image to GitHub Packages
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./postgres
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/fdw/postgres:latest
+            ghcr.io/fdw/postgres:${{ env.date }}
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ghcr.io/fdw/postgres
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true
