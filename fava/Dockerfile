@@ -1,7 +1,7 @@
 ARG BEANCOUNT_VERSION=3.2.0
 ARG FAVA_VERSION=v1.30.6
 
-ARG NODE_BUILD_IMAGE=22-bookworm
+ARG NODE_BUILD_IMAGE=22.21.0-bookworm
 FROM node:${NODE_BUILD_IMAGE} AS node_build_env
 ARG FAVA_VERSION
 
@@ -27,7 +27,7 @@ RUN rm -rf .*cache && \
 # distroless Python image, which is Debian + Python from Debian APT
 # repo. The python intepreter in the `python:bookworm` image is not from
 # Debian APT repo.
-FROM debian:bookworm AS build_env
+FROM debian:bookworm-20251020 AS build_env
 ARG BEANCOUNT_VERSION
 
 RUN apt-get update
@@ -53,7 +53,7 @@ RUN pip3 uninstall -y pip
 
 RUN find /app -name __pycache__ -exec rm -rf -v {} +
 
-FROM gcr.io/distroless/python3-debian12
+FROM gcr.io/distroless/python3-debian12@sha256:afdfc6df9eb96cf65576d4d59af48c4b5dac29ad62066aee879f12b303298aac
 COPY --from=build_env /app /app
 
 # Default fava port number
