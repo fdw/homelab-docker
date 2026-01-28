@@ -1,4 +1,4 @@
-FROM rust:1.85.0 AS builder
+FROM rust:1.93.0 AS builder
 
 RUN apt-get update && apt-get install -y build-essential protobuf-compiler && apt-get clean && rm -rf /var/lib/apt/lists/*
 

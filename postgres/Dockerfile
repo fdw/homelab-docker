@@ -2,7 +2,7 @@ FROM postgres:18.0
 
 # Set environment variables for the extensions' versions/paths
 ENV POSTGIS_VERSION="3.5" \
-    VECTORCHORD_VERSION="0.5.3" \
+    VECTORCHORD_VERSION="1.0.0" \
     PG_MAJOR="18"
 
 # ----------------------------------------------------------------------
