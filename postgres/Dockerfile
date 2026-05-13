@@ -1,8 +1,8 @@
-FROM postgres:18.0
+FROM postgres:18.3
 
 # Set environment variables for the extensions' versions/paths
-ENV POSTGIS_VERSION="3.5" \
-    VECTORCHORD_VERSION="1.0.0" \
+ENV POSTGIS_VERSION="3" \
+    VECTORCHORD_VERSION="1.1.1" \
     PG_MAJOR="18"
 
 # ----------------------------------------------------------------------
@@ -10,7 +10,7 @@ ENV POSTGIS_VERSION="3.5" \
 # ----------------------------------------------------------------------
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y --no-install-recommends postgresql-${PG_MAJOR}-postgis-${POSTGIS_VERSION%.*}; \
+    apt-get install -y --no-install-recommends postgresql-${PG_MAJOR}-postgis-${POSTGIS_VERSION}; \
     rm -rf /var/lib/apt/lists/*;
 
 # ----------------------------------------------------------------------
