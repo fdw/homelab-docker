@@ -1,5 +1,5 @@
 ARG BEANCOUNT_VERSION=3.2.3
-ARG FAVA_VERSION=v1.30.12
+ARG FAVA_VERSION=v1.30.13
 
 ARG NODE_BUILD_IMAGE=lts-trixie
 FROM node:${NODE_BUILD_IMAGE} AS node_build_env
@@ -47,7 +47,7 @@ RUN git checkout ${BEANCOUNT_VERSION}
 
 RUN CFLAGS=-s pip3 install -U /tmp/build/beancount
 RUN pip3 install -U /tmp/build/fava
-RUN pip3 install -U fava-portfolio-returns==2.5.1 beanprice==2.1.0
+RUN pip3 install -U fava-portfolio-returns==2.6.0 beanprice==2.1.0
 
 RUN pip3 uninstall -y pip
 
