@@ -3,7 +3,7 @@ FROM rust:1.93.0 AS builder
 RUN apt-get update && apt-get install -y build-essential protobuf-compiler && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN cargo install --git https://github.com/ankitects/anki.git \
---tag 25.09.4 \
+--tag 26.08.1 \
 --root /anki-server  \
 --locked \
 anki-sync-server

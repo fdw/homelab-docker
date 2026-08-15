@@ -1,4 +1,4 @@
-FROM postgres:18.3
+FROM postgres:18.6
 
 # Set environment variables for the extensions' versions/paths
 ENV POSTGIS_VERSION="3" \

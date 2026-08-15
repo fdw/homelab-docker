@@ -3,7 +3,7 @@ FROM debian:trixie AS build_env
 RUN apt-get update && apt-get install -y python3-pip
 
 RUN pip3 install --target=/app/packages \
-        fava==1.30.14 \
+        fava==1.30.15 \
         beancount==3.2.3 \
         fava-portfolio-returns==2.7.0 \
         beanprice==2.1.0
